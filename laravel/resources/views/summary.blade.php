@@ -39,11 +39,17 @@
                                 <th>Item</th>
                                 <th>Qty</th>
                                 <th>Shipped</th>
-                                <th>Pending</th>
+                                <th>Remaining</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody
+                            <?php $totalItems=0;$totalOnBoard=0;$totalInStock=0?>
                             @foreach($sales as $sale)
+                                <?php
+                                    $totalItems+=$sale->FilterItem($item_id)->sum('qty');
+                                    $totalOnBoard+=$sale->FilterItem($item_id)->sum('on_board');
+                                    $totalInStock+=$sale->FilterItem($item_id)->sum('in_stock')
+                                    ?>
                                 <tr>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->id}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->customer->name}}</td>
@@ -73,6 +79,14 @@
                                 @endforeach
 
                             @endforeach
+                            <tr>
+                                <td colspan="8"></td>
+
+                                <td><b>TOTAL:</b></td>
+                                <td><b>{{$totalItems}}</b></td>
+                                <td><b>{{$totalOnBoard}}</b></td>
+                                <td><b>{{$totalInStock}}</b></td>
+                            </tr>
 
                             </tbody>
                         </table>

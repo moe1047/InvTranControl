@@ -79,7 +79,10 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <input type="submit" class="btn btn-primary" value="Search"   name="search">
+                @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                    <input type="submit" class="btn btn-primary" value="Search"   name="search">
+                @endif
+
                 <input type="submit" class="btn btn-primary" value="Report" name="report">
             </div>
         </div>

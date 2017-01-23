@@ -8,7 +8,20 @@
             <div class="col-md-12 ">
                 <div class="panel panel-default" ng-controller="saleList">
                     <div class="panel-heading">Sale Detail</div>
-                    <div class="panel-body" >
+                    <div class="panel-body" style="padding:2px">
+                        <div >
+                            <div style="margin-top:15px;margin-left:10px;float:left">
+                                <img src="{{asset('css/logo.jpg')}}" class="img img-rounded" width="120" height="100">
+                            </div>
+                            <div style="margin-top:0px;margin-left:16%;float:left">
+                                <h1 class="text-center" >Sabawanaag General Trading</h1>
+                                <h5 class="text-center" style="text-decoration: underline;">Summary Report</h5>
+                                <p class="text-center"><b>Berbera:</b> 740794 <b>Hargeisa:</b> 524855 <b>Email:</b> tradingsaba@gmail.com</p>
+                            </div>
+                            <div style="margin-top:15px;margin-left:10px;float:right">
+                                <img src="{{asset('css/logo.jpg')}}" class="img img-rounded" width="120" height="100">
+                            </div>
+                        </div>
 
 
                         <div id="sale" class="col-xs-12" ng-if="View == 'Sales'">

@@ -33,7 +33,7 @@
                                     <th>ItemID</th>
                                     <th>Name</th>
                                     <th>Quantity</th>
-                                    <th>Pending</th>
+                                    <th>Remaining</th>
                                     <th>Total In stock</th>
                                 </tr>
                                 </thead>

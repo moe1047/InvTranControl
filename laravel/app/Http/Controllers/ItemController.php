@@ -29,7 +29,7 @@ class ItemController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-
+            'category_id' => 'required',
         ]);
 
         try{
@@ -39,6 +39,40 @@ class ItemController extends Controller
         }
 
         //People::find($id)->delete();
+    }
+    public function categories()
+    {
+        return Category::all();
+    }
+    public function category_edit($id)
+    {
+        $category=Category::find($id);
+        return view('editCategory',compact('category'));
+    }//category_update
+    public function category_update(Request $request,$id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+
+        ]);
+        Category::find($id)->update(['name'=>$request->input('name')]);
+        return redirect('people');
+    }
+    public function edit($id)
+    {
+        $item=Item::find($id);
+        $categories=Category::all()->pluck('name','id');
+        return view('editItem',compact('item','categories'));
+    }
+    public function update(Request $request,$id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required',
+
+        ]);
+        Item::find($id)->update(['name'=>$request->input('name'),'alert_qty'=>$request->input('alert_qty')]);
+        return redirect('people');
     }
     public function all()
     {

@@ -17,7 +17,10 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>PurchaseID</th><th>Date</th><th>Ship Name</th><th>Origin Country</th><th>Items</th><th>Actions</th>
+                                    <th>PurchaseID</th><th>Date</th><th>Ship Name</th><th>Origin Country</th><th>Items</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Actions</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,8 +36,11 @@
                                                 {{$purchaseItem->item->name}}- {{$purchaseItem->qty}}<br>
                                             @endforeach
                                         </td>
-                                        <td><a class="btn btn-danger btn-sm" ng-click="delPurchaseConfirmation({{$purchase->id}})">Delete</a>
-                                        </td>
+                                        @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                            <td><a class="btn btn-danger btn-sm" ng-click="delPurchaseConfirmation({{$purchase->id}})">Delete</a>
+                                            </td>
+                                        @endif
+
                                     </tr>
                                 @endforeach
 

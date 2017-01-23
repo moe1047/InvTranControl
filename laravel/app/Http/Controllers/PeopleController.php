@@ -86,6 +86,20 @@ class PeopleController extends Controller
 
         //People::find($id)->delete();
     }
+    public function edit($id)
+    {
+        $people=People::find($id);
+        return view('editPeople',compact('people'));
+    }
+    public function update(Request $request,$id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+
+        ]);
+        People::find($id)->update(['name'=>$request->input('name'),'no'=>$request->input('no')]);
+        return redirect('people');
+    }
 
 
 }

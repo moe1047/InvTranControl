@@ -36,7 +36,8 @@
 
         <div class="col-md-5">
             <!--<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>-->
-            <select class="form-control select" name="item_id"   ng-model="selectedItem" id="" ui-select2>
+            <select class="form-control select" name="item_id"   ng-model="selectedItem" ui-select2>
+                <option  value=""></option>
                 <option ng-repeat="(key,value) in items " value="[[value.id]]">[[value.name]]</option>
             </select>
                 <span class="help-block" ng-show="purchaseForm.item_id.$invalid && !purchaseForm.item_id.$pristine">

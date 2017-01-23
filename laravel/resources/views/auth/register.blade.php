@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="password-confirm" class="col-md-4 control-label">Role:</label>
                             <div class="col-md-6">
-                                <select class="form-control" name="type">
+                                <select class="form-control" name="role">
                                     <option value="admin">Admin</option>
                                     <option value="sales">Sales</option>
                                     <option value="owner">Owner</option>

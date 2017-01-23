@@ -195,6 +195,13 @@ class SaleController extends Controller
 
     public function completePost(\Illuminate\Http\Request $request)
     {
+        //validate
+        $this->validate($request, [
+            'customer_id' => 'required|numeric',
+            'driver_id' => 'required|numeric',
+            'ordered_by' => 'required|numeric',
+            'items' => 'required',
+        ]);
 
         DB::transaction(function($request) use ($request)
         {
@@ -258,6 +265,7 @@ class SaleController extends Controller
      */
     public function search(\Illuminate\Http\Request $request)
     {
+
         $from=Carbon::parse($request->input('from'))->toDateString();
         $to=Carbon::parse($request->input('to'))->toDateString();
         $sales=Sale::when($request->has('from')&&$request->has('to'),function($builder) use ($request,$from,$to){
@@ -289,6 +297,7 @@ class SaleController extends Controller
             ->get();
         if($request->input('report')!=""){
             $item_id=$request->input('item_id');//to filter items
+
             return view('summary',compact('sales','from','to','item_id'));
         }else{
             $customers=\App\People::where('type','customer')->get(['name','id']);

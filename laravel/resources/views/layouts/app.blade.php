@@ -51,17 +51,23 @@
                     </a>
                 </div>
 
+
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li {{Request::is('/')? "class=active":''}}><a href="{{url('/')}}">Home</a></li>
-                        <li {{Request::is('sale/create')? "class=active":''}}><a href="{{url('/sale/create')}}">Add Sale</a></li>
-                        <li {{Request::is('purchase/create')? "class=active":''}}><a href="{{url('/purchase/create')}}">Add Purchase</a></li>
+                        @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                            <li {{Request::is('sale/create')? "class=active":''}}><a href="{{url('/sale/create')}}">Add Sale</a></li>
+                            <li {{Request::is('purchase/create')? "class=active":''}}><a href="{{url('/purchase/create')}}">Add Purchase</a></li>
+                        @endif
                         <li {{Request::is('sale')? "class=active":''}}><a href="{{url('/sale/')}}">All Sales</a></li>
                         <li {{Request::is('purchase')? "class=active":''}}><a href="{{url('/purchase/')}}">All Purchases</a></li>
                         <li {{Request::is('people')? "class=active":''}}><a href="{{url('/people')}}">Lists</a></li>
                         <li {{Request::is('item/summary')? "class=active":''}}><a href="{{url('/item/summary')}}">Inventory</a></li>
-                        <li {{Request::is('/register')? "class=active":''}}><a href="{{url('/register')}}">Add User</a></li>
+                        @if(Auth::user()->role=='owner')
+                            <li {{Request::is('/register')? "class=active":''}}><a href="{{url('/register')}}">Add User</a></li>
+                            <li {{Request::is('/users/all')? "class=active":''}}><a href="{{url('/users/all')}}">All Users</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -78,6 +84,11 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="{{ url('/password/reset') }}" >
+                                            Change Password
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -88,6 +99,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+
                                 </ul>
                             </li>
                         @endif
@@ -95,6 +107,8 @@
                 </div>
             </div>
         </nav>
+
+
 
         @yield('content')
     </div>
@@ -107,5 +121,9 @@
     <script type='text/javascript' src='{{asset('js/loading-bar.min.js')}}'></script>
 
 @yield('scripts')
+<script>
+
+
+</script>
 </body>
 </html>

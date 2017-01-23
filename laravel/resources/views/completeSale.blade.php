@@ -19,6 +19,23 @@
 @endsection
 @section('scripts')
     <script>
+        var updateOnBoard=function(id){
+            var qty=document.getElementById ("qty"+id).innerText;
+            var on_board=document.getElementById('on_board'+id).value;
+            var in_stock=document.getElementById('in_stock'+id).value;
+            document.getElementById('on_board'+id).value=parseInt(qty)-parseInt(in_stock);
+            //alert(on_board);
+            //$('#on_board'+id).value(11);
+        };
+        var updateInStock=function(id){
+            var qty=document.getElementById ("qty"+id).innerText;
+
+            var on_board=document.getElementById('on_board'+id).value;
+            var in_stock=document.getElementById('in_stock'+id).value;
+            document.getElementById('in_stock'+id).value=parseInt(qty)-parseInt(on_board);
+            //alert(on_board);
+            //$('#on_board'+id).value(11);
+        };
         myApp=angular.module('myApp',['angular-loading-bar']);
         myApp.config(function($interpolateProvider) {
             $interpolateProvider.startSymbol('[[');
@@ -135,6 +152,10 @@
                 //$scope.selectedItems[key].on_board=$scope.selectedItems[key].on_board-$scope.selectedItems[key].in_stock;
                 console.log($scope.selectedItems[key].on_board);
             }
+            $scope.calculateRemaining=function(key){
+                $scope.selectedItems[key].in_stock=$scope.selectedItems[key].qty-$scope.selectedItems[key].on_board
+            }
+
 
 
 

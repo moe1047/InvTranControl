@@ -24,7 +24,6 @@
         <div class="col-md-5">
             <!--<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>-->
             <select ui-select2 class="form-control select" name="item_id"   ng-model="selectedItem" id="">
-                <option value="">Select Item</option>
                 @foreach($items as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>
                 @endforeach
@@ -140,7 +139,7 @@
         <div class="col-md-6 col-md-offset-4">
             <button type="submit" class="btn btn-primary" ng-click="submit()" ng-disabled="saleForm.$invalid" onclick="false">
                 submit
-            </button >
+            </button>
         </div>
     </div>
 </form>

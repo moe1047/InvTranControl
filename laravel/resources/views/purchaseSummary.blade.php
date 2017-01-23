@@ -43,7 +43,11 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <?php $totalItems=0;?>
                             @foreach($purchases as $purchase)
+                                <?php
+                                $totalItems+=$purchase->FilterItem($item_id)->sum('qty');
+                                ?>
                                 <tr>
                                     <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->id}}</td>
                                     <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->purchased_date}}</td>
@@ -64,6 +68,13 @@
 
 
                             @endforeach
+                            <tr>
+                                <td colspan="4"></td>
+
+                                <td><b>TOTAL:</b></td>
+                                <td><b>{{number_format($totalItems)}}</b></td>
+
+                            </tr>
                             </tbody>
                         </table>
                     </div>

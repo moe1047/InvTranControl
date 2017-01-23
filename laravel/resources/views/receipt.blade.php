@@ -46,7 +46,7 @@
                             <caption>Item List</caption>
                             <thead>
                             <tr>
-                                <th>ID</th><th>Description</th><th>Qty</th>
+                                <th>ID</th><th>Description</th><th>Qty</th><th>Shipped</th><th>Remaining</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -55,6 +55,8 @@
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->item->name}}</td>
                                     <td>{{$item->qty}}</td>
+                                    <td>{{$item->on_board}}</td>
+                                    <td>{{$item->in_stock}}</td>
                                 </tr>
                             @endforeach
 
@@ -114,7 +116,7 @@
                             <caption>Item List</caption>
                             <thead>
                             <tr>
-                                <th>ID</th><th>Description</th><th>Qty</th>
+                                <th>ID</th><th>Description</th><th>Qty</th><th>Shipped</th><th>Remaining</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -122,7 +124,9 @@
                                 <tr ng-repeat="sale in sales">
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->item->name}}</td>
-                                    <td>{{$item->qty}}</td>
+                                    <td>{{$item->qty}}
+                                    <td>{{$item->on_board}}</td>
+                                    <td>{{$item->in_stock}}</td>
                                 </tr>
                             @endforeach
 

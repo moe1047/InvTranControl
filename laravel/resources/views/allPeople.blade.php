@@ -11,7 +11,9 @@
                     <div class="panel-body" >
                         <div class="col-md-2">
                             <select class="form-control" ng-change="checkView()" ng-model="selectedView">
-                                <option value="Drivers">Drivers</option><option value="Customers">Customers</option><option value="Branches">Branches</option><option value="Items">Items</option>
+                                <option value="Drivers">Drivers</option><option value="Customers">Customers</option>
+                                <option value="Branches">Branches</option><option value="Items">Items</option>
+                                <option value="Category">Category</option>
                             </select>
                         </div>
 
@@ -19,14 +21,27 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Name</th><th>No</th><th>Delete</th>
+                                    <th>Name</th><th>No</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Edit</th>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Delete</th>
+                                    @endif
+
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="driver in drivers">
                                     <td>[[driver.name]]</td>
                                     <td>[[driver.no]]</td>
-                                    <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(driver.id)">Delete</a></td>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="people/[[driver.id]]/edit" class="btn btn-primary btn-sm" >Edit</a></td>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(driver.id)">Delete</a></td>
+                                    @endif
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -35,14 +50,28 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Name</th><th>No</th><th>Delete</th>
+                                    <th>Name</th><th>No</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Edit</th>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Delete</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="customer in customers">
                                     <td>[[customer.name]]</td>
                                     <td>[[customer.no]]</td>
-                                    <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(customer.id)">Delete</a></td>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="people/[[customer.id]]/edit" class="btn btn-primary btn-sm" >Edit</a></td>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(customer.id)">Delete</a></td>
+                                    @endif
+
+
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -51,14 +80,27 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Name</th><th>No</th><th>Delete</th>
+                                    <th>Name</th><th>No</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Edit</th>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Delete</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="branch in branches">
                                     <td>[[branch.name]]</td>
                                     <td>[[branch.no]]</td>
-                                    <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(branch.id)">Delete</a></td>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="people/[[branch.id]]/edit" class="btn btn-primary btn-sm" >Edit</a></td>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(branch.id)">Delete</a></td>
+                                    @endif
+
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -67,7 +109,13 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Name</th><th>qty</th><th>Alert Quantity</th><th>Delete</th>
+                                    <th>Name</th><th>qty</th><th>Alert Quantity</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Edit</th>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Delete</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +123,36 @@
                                     <td>[[item.name]]</td>
                                     <td>[[item.qty]]</td>
                                     <td>[[item.alert_qty]]</td>
-                                    <td><a href="" class="btn btn-danger btn-sm" ng-click="delItemConfirmation(item.id)">Delete</a></td>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="item/[[item.id]]/edit" class="btn btn-primary btn-sm" >Edit</a></td>
+                                    @endif
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="" class="btn btn-danger btn-sm" ng-click="delItemConfirmation(item.id)">Delete</a></td>
+                                    @endif
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="items" class="col-xs-12" ng-if="View == 'Category'">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Edit</th>
+                                    @endif
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="category in categories">
+                                    <td>[[category.name]]</td>
+
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <td><a href="item/category/[[category.id]]/edit" class="btn btn-primary btn-sm" >Edit</a></td>
+                                    @endif
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -111,6 +188,10 @@
             $http.get('/people/branches').then(function(result){
                 console.log(result.data);
                 $scope.branches=result.data;
+            });
+            $http.get('/item/categories').then(function(result){
+                //console.log(result.data);
+                $scope.categories=result.data;
             });
 
 

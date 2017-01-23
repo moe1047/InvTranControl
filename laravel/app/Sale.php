@@ -43,6 +43,12 @@ class Sale extends Model
 
 
     }
+    public function ItemsQtySum()
+    {
+        return $this->saleItems()->sum('qty');
+
+
+    }
     public function scopeSearchSaleId($query,$sale_id)
     {
         return $query->where('id',$sale_id);

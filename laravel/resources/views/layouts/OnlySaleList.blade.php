@@ -15,7 +15,11 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>SaleID</th><th>Date</th><th>Customer</th><th>Driver</th><th>Branch</th><th>Plate No</th><th>Status</th><th>Print</th><th>Actions</th>
+                                    <th>SaleID</th><th>Date</th><th>Customer</th><th>Driver</th><th>Branch</th><th>Plate No</th><th>Status</th>
+                                    <th>Print</th>
+                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
+                                        <th>Actions</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -29,6 +33,7 @@
                                         <td>{{$sale->plate_no}}</td>
                                         <td><h4 style="margin-top: 3px;"><span class="{{$sale->status=='pending'?'label label-warning' :'label label-success'}}" >{{$sale->status}}</span></h4></td>
                                         <td><a href="/sale/{{$sale->id}}/print" class="btn btn-default btn-sm" target="_blank">Print</a></td>
+                                        @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -36,6 +41,7 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
                                                     @if($sale->status=='pending')
                                                         <li><a href="{{url("/sale/$sale->id/complete")}}">Complete</a></li>
                                                         <li><a href="{{url("/sale/$sale->id/cancelRemaining")}}">Cancel Remaining</a></li>
@@ -48,6 +54,7 @@
                                                 </ul>
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 

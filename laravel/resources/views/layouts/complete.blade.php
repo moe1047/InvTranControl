@@ -15,17 +15,17 @@
 
                     <tr>
                         <td>{{$saleItem->Item->name}}</td>
-                        <td>
+                        <td >
                             {{$saleItem->qty}}
                         </td>
-                        <td>
+                        <td id="qty{{$saleItem->id}}">
                             {{$saleItem->on_board}}
                         </td>
                         <td>
-                            <input type="text" class="form-control" value="{{$saleItem->in_stock}}" name="items[{{$saleItem->id}}][on_board]"  >
+                            <input type="text" class="form-control" value="{{$saleItem->in_stock}}" name="items[{{$saleItem->id}}][on_board]" onkeyup="updateInStock({{$saleItem->id}})" id="on_board{{$saleItem->id}}">
                         </td>
                         <td>
-                            <input type="text" class="form-control" value="0"  name="items[{{$saleItem->id}}][in_stock]">
+                            <input type="text" class="form-control" value="0"  name="items[{{$saleItem->id}}][in_stock]" onkeyup="updateOnBoard({{$saleItem->id}})" id="in_stock{{$saleItem->id}}">
                         </td>
 
                         <td>{{$saleItem->Item->qty}}</td>
