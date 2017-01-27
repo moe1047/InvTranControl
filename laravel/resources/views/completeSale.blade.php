@@ -9,7 +9,18 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Complete Sale</div>
                     <div class="panel-body" ng-controller="complete">
+                        @if($errors->any())
+                            <div class="alert alert-danger alert-dismissible" ng-show="success" ng-cloak>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <ol>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{$error}}</li>
+                                    @endforeach
+                                </ol>
 
+                                <strong>Success!</strong> Sales has been added successfully.
+                            </div>
+                        @endif
                         @include('layouts.complete');
                     </div>
                 </div>
@@ -22,8 +33,9 @@
         var updateOnBoard=function(id){
             var qty=document.getElementById ("qty"+id).innerText;
             var on_board=document.getElementById('on_board'+id).value;
+            var old_on_board=document.getElementById ("old_on_board"+id).innerText;
             var in_stock=document.getElementById('in_stock'+id).value;
-            document.getElementById('on_board'+id).value=parseInt(qty)-parseInt(in_stock);
+            document.getElementById('on_board'+id).value=parseInt(qty)-parseInt(old_on_board)-parseInt(in_stock);
             //alert(on_board);
             //$('#on_board'+id).value(11);
         };
@@ -32,7 +44,8 @@
 
             var on_board=document.getElementById('on_board'+id).value;
             var in_stock=document.getElementById('in_stock'+id).value;
-            document.getElementById('in_stock'+id).value=parseInt(qty)-parseInt(on_board);
+            var old_on_board=document.getElementById ("old_on_board"+id).innerText;
+            document.getElementById('in_stock'+id).value=parseInt(qty)-parseInt(old_on_board)-parseInt(on_board);
             //alert(on_board);
             //$('#on_board'+id).value(11);
         };

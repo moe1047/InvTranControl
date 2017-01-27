@@ -11,6 +11,10 @@ class Item extends Model
     {
         return $this->hasMany('\App\SaleItems','item_id','id');
     }
+    public function Category()
+    {
+        return $this->hasOne('\App\Category','id','category_id');
+    }
     public function getPending()
     {
         $pendings=$this->saleItems()->where('in_stock','>',0)->get();

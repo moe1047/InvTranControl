@@ -13,12 +13,14 @@
                             <div style="margin-top:0px;margin-left:16%;float:left">
                                 <h1 class="text-center" >Sabawanaag General Trading</h1>
                                 <h5 class="text-center" style="text-decoration: underline;">Summary Report</h5>
+                                <h5 class="text-center" style="text-decoration: underline;"><b>From:</b> {{$from}} - <b>To:</b> {{$to}}</h5>
                                 <p class="text-center"><b>Berbera:</b> 740794 <b>Hargeisa:</b> 524855 <b>Email:</b> tradingsaba@gmail.com</p>
                             </div>
                             <div style="margin-top:15px;margin-left:10px;float:right">
                                 <img src="{{asset('css/logo.jpg')}}" class="img img-rounded" width="120" height="100">
                             </div>
                         </div>
+
 
 
                     </div>
@@ -29,12 +31,12 @@
                             <thead>
                             <tr>
                                 <th>SaleID</th>
+                                <th>Date</th>
                                 <th>Customer</th>
-                                <th>Driver</th>
                                 <th>Order By</th>
+                                <th>Driver</th>
                                 <th>Plate No</th>
                                 <th>status</th>
-                                <th>Date</th>
                                 <th>User</th>
                                 <th>Item</th>
                                 <th>Qty</th>
@@ -52,12 +54,12 @@
                                     ?>
                                 <tr>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->id}}</td>
+                                    <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->created_at->toDateString()}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->customer->name}}</td>
-                                    <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->driver->name}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->orderedBy->name}}</td>
+                                    <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->driver->name}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->plate_no}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->status}}</td>
-                                    <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->created_at->toDateString()}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->user->name}}</td>
                                 </tr>
 
@@ -83,9 +85,9 @@
                                 <td colspan="8"></td>
 
                                 <td><b>TOTAL:</b></td>
-                                <td><b>{{$totalItems}}</b></td>
-                                <td><b>{{$totalOnBoard}}</b></td>
-                                <td><b>{{$totalInStock}}</b></td>
+                                <td><b>{{number_format($totalItems)}}</b></td>
+                                <td><b>{{number_format($totalOnBoard)}}</b></td>
+                                <td><b>{{number_format($totalInStock)}}</b></td>
                             </tr>
 
                             </tbody>

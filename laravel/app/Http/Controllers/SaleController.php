@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\ItemMovement;
+use App\People;
 use App\Sale;
 use App\SaleItems;
 use App\SaleItemTran;
@@ -22,9 +24,29 @@ class SaleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function summry(){
+        return view("summary",compact('sales'));
+    }
+    public function edit($id){
+        $customers=\App\People::where('type','customer')->get()->pluck('name','id');
+        $drivers=\App\People::where('type','driver')->get()->pluck('name','id');
+        $branches=\App\People::where('type','branch')->get()->pluck('name','id');
+        $sale=Sale::find($id);
+        return view("editSale",compact('sale','customers','drivers','branches'));
+    }
+    public function update(\Illuminate\Http\Request $request,$id){
+        $this->validate($request, [
+            'customer_id' => 'required',
+            'driver_id' => 'required',
+            'ordered_by' => 'required',
+            'plate_no' => 'required',
 
-        return View("summary",compact('sales'));
-
+        ]);
+        Sale::find($id)->update(['customer_id'=>$request->input('customer_id'),
+            'driver_id'=>$request->input('driver_id'),
+            'ordered_by'=>$request->input('ordered_by'),
+            'plate_no'=>$request->input('plate_no')
+        ]);
+        return redirect('sale');
     }
     public function index(\Illuminate\Http\Request $request)
     {
@@ -32,11 +54,7 @@ class SaleController extends Controller
         $drivers=\App\People::where('type','driver')->get(['name','id']);
         $branches=\App\People::where('type','branch')->get(['name','id']);
         $items=\App\Item::all();
-
         $sales= Sale::orderBy('id','desc')->paginate(10);
-
-
-
         return view("layouts.OnlySaleList",compact('sales','customers','drivers','branches','items'));
     }
 
@@ -114,6 +132,8 @@ class SaleController extends Controller
                     ->update(['qty' => ((int)$qty-(int)$saleItem['qty'])]);
                 //add record to sale items Transactions
                 SaleItemTran::create(['sale_item_id'=>$LastSaleItem->id,'on_board'=>$saleItem['on_board'],'in_stock'=>$saleItem['in_stock'],'driver_id'=>$request->input('driver_id'),'plate_no'=>$request->input('plate_no'),'note'=>$request->input('note')]);
+                ItemMovement::create(['tran_type'=>'add_sale','qty'=>(int)$saleItem['qty'],'tran_type_id'=>$sale->id,
+                    'in_stock'=>(int)$qty-(int)$saleItem['qty'],'item_id'=>$saleItem['id']]);
 
             }
 
@@ -150,11 +170,14 @@ class SaleController extends Controller
                 SaleItemTran::where('sale_item_id',$saleItem->id)->delete();
                 //add quantity back to items
                   //get previous qty
-                  $previous_qty=Item::find($saleItem->item->id)->qty;
-                Item::where('id',$saleItem->item->id)->update(['qty'=>$previous_qty+$saleItem->qty]);
+                $previous_qty=Item::find($saleItem->item->id)->qty;
+                Item::where('id',$saleItem->item->id)->update(['qty'=>(int)$previous_qty+(int)$saleItem->qty]);
+                ItemMovement::create(['tran_type'=>'delete_sale','qty'=>(int)$saleItem->qty,
+                    'in_stock'=>(int)$previous_qty+(int)$saleItem->qty,'item_id'=>$saleItem->item_id]);
 
                 //delete from saleItem
                 $saleItem->delete();
+
             }
             $sale->delete();
 
@@ -197,14 +220,14 @@ class SaleController extends Controller
     {
         //validate
         $this->validate($request, [
-            'customer_id' => 'required|numeric',
+            'plate_no' => 'required|numeric',
             'driver_id' => 'required|numeric',
-            'ordered_by' => 'required|numeric',
             'items' => 'required',
         ]);
-
-        DB::transaction(function($request) use ($request)
+        $item_list=[];
+        DB::transaction(function($request) use (&$item_list,$request)
         {
+
             $sale_status="completed";
             foreach($request->input('items') as $id => $item){
                 if((int)$item['in_stock'] + (int)$item['on_board']+ (int)$item['sent'] !=(int)$item['qty'] ){
@@ -216,6 +239,17 @@ class SaleController extends Controller
             }
 
             foreach($request->input('items') as $id => $item){
+                $saleItem=SaleItems::find($id);
+                //populate item_list for print
+                $item_list[]=['name'=>$saleItem->item->name,
+                    'on_board'=>(int)$item["on_board"],'in_stock'=>$item["in_stock"]
+                    ,'plate_no'=>$request->input('plate_no'),'note'=>$request->input('note'),
+                    'driver'=>People::find($request->input('driver_id'))->name,
+                    'customer'=>$saleItem->sale->customer->name,
+                    'branch'=>$saleItem->sale->orderedBy->name,
+                    'sale_id'=>$saleItem->sale->id,
+                    'sale_date'=>$saleItem->sale->sale_date,
+                ];
                 //update saleItems
                 $previous_on_board=SaleItems::where('id',$id)->first()->on_board;
                 SaleItems::where('id',$id)->update(['on_board'=>(int)$previous_on_board+(int)$item["on_board"],'in_stock'=>$item["in_stock"]]);
@@ -235,12 +269,11 @@ class SaleController extends Controller
                 Sale::where('id', $request->input('sale_id'))
                     ->update(['status' => 'completed']);
             }
+
+
         });
-        foreach($request->input('items') as $id => $item){
-            $saleId=SaleItems::find($id)->Sale->id;
-            break;
-        }
-        return $this->detail($saleId);
+
+        return $this->completePrint($item_list);
     }
 
     /**
@@ -249,10 +282,20 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function completePrint($items)
+    public function completePrint($itemss)
     {
+        $items=$itemss;
+        $customer=$items[0]['customer'];
+        $sale_id=$items[0]['sale_id'];
+        $driver=$items[0]['driver'];
+        $date=$items[0]['sale_date'];
+        $branch=$items[0]['branch'];
+        $plate_no=$items[0]['plate_no'];
+        $today=Carbon::today()->toDateString();
 
-        return view('completeReciept',compact('items'));
+        return view('completeReciept',compact('items',
+            'customer','sale_id','driver','date','branch'
+        ,'plate_no','today'));
 
     }
 

@@ -61,7 +61,7 @@
             <td>
                 <input type="text" class="form-control" ng-model="selectedItems[key].in_stock" ng-change="update_on_board(key)">
             </td>
-            <td>[[value.stock]]</td>
+            <td>[[value.stock | number ]]</td>
             <td><button class="btn btn-danger" ng-click="removeItem(key)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>
         </tbody>

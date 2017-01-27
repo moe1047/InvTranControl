@@ -20,6 +20,7 @@ class Sale extends Model
     {
         return $this->hasOne('\App\People','id','ordered_by');
     }
+
     public function saleItems()
     {
         return $this->hasMany('\App\SaleItems');

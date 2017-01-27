@@ -94,7 +94,7 @@
                     data:{'name':$scope.item_name,'qty':$scope.item_qty,'alert_qty':$scope.item_alert_qty,'category_id':$scope.category_id}
                 }).then(function Succes(response) {
                     $scope.item_name='';$scope.item_qty='';$scope.item_alert_qty='';$scope.category_id='';
-                    //location.reload();
+                    location.reload();
                     console.log(response.data);
                     //console.log($scope.submittedData);
                 }, function Error(response) {

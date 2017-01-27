@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Item;
+use App\ItemMovement;
 use App\SaleItems;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -16,15 +19,36 @@ class ItemController extends Controller
             'category_id' => 'required',
 
         ]);
+        DB::transaction(function($request) use ($request)
+        {
 
-        try{
-            return Item::create(['name'=>$request->input('name'),'qty'=>$request->input('qty'),'alert_qty'=>$request->input('alert_qty'),'category_id'=>$request->input('category_id')]);
-        }catch (\Exception $e){
-            return response($e->getMessage(),500);
-        }
-
+                $item=Item::create(['name'=>$request->input('name'),'qty'=>$request->input('qty'),'alert_qty'=>$request->input('alert_qty'),'category_id'=>$request->input('category_id')]);
+                ItemMovement::create(['tran_type'=>'opening_balance','qty'=>$item->qty,'in_stock'=>$item->qty,'item_id'=>$item->id]);
+        });
         //People::find($id)->delete();
     }//createCategory
+    public function search_movement()
+    {
+        $items=Item::all();
+        return view('searchItemMovement',compact('items'));
+    }
+    public function movement_report(Request $request)
+    {
+        $this->validate($request, [
+            'item_id' => 'required',
+
+        ]);
+        $from=Carbon::parse($request->input('from'))->toDateString();
+        $to=Carbon::parse($request->input('to'))->toDateString();
+        $itemMovements=ItemMovement::when($request->has('from')&&$request->has('to'),function($builder) use ($request,$from,$to){
+            return $builder->whereBetween('created_at',array($from,$to));
+        })
+            ->when($request->has('item_id'),function($builder) use ($request){
+                return $builder->where('item_id',$request->input('item_id'));
+            })->orderBy('created_at','asc')->get();
+        $item_name=Item::find($request->input('item_id'))->name;
+        return view('ItemMovementSummary',compact('from','to','itemMovements','item_name'));
+    }
     public function createCategory(Request $request)
     {
         $this->validate($request, [
@@ -81,8 +105,9 @@ class ItemController extends Controller
     }
     public function summary()
     {
+        $today=Carbon::today()->toDateString();
         $categories=Category::all();
-        return view('inventoryList',compact('categories'));
+        return view('inventoryList',compact('categories','today'));
         //People::find($id)->delete();
     }
     public function delete($id)

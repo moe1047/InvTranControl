@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Item;
+use App\ItemMovement;
 use App\Purchase;
 use App\PurchaseItems;
 use Carbon\Carbon;
@@ -95,6 +96,8 @@ class PurchaseController extends Controller
                 //get previous qty
                 $previous_qty=Item::find($purchaseItem->item->id)->qty;
                 Item::where('id',$purchaseItem->item->id)->update(['qty'=>(int)$previous_qty-(int)$purchaseItem->qty]);
+                ItemMovement::create(['tran_type'=>'delete_purchase','qty'=>(int)$purchaseItem->qty,
+                    'in_stock'=>(int)$previous_qty-(int)$purchaseItem->qty,'item_id'=>$purchaseItem->item_id]);
 
                 //delete from saleItem
                 $purchaseItem->delete();
@@ -138,8 +141,10 @@ class PurchaseController extends Controller
                 PurchaseItems::create(['purchase_id'=>$purchase->id,'qty'=>$purchaseItem['qty'],'item_id'=>$purchaseItem['id']]);
                 //update item qty
                 $qty=Item::find($purchaseItem['id'])->qty;
-                Item::where('id', $purchaseItem['id'])
+                $updatedItem=Item::where('id', $purchaseItem['id'])
                     ->update(['qty' => ((int)$qty+(int)$purchaseItem['qty'])]);
+                ItemMovement::create(['tran_type'=>'add_purchase','qty'=>(int)$purchaseItem['qty'],'tran_type_id'=>$purchase->id,
+                    'in_stock'=>(int)$qty+(int)$purchaseItem['qty'],'item_id'=>$purchaseItem['id']]);
             }
         });
 

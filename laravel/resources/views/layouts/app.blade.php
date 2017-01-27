@@ -12,10 +12,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-notifications.min.css') }}" rel="stylesheet">
 
     @yield('css')
 
-
+<style>
+    body {
+        padding-top: 70px;
+    }
+</style>
     <!-- Scripts -->
     <script>
         window.Laravel =<?php echo json_encode([
@@ -30,7 +35,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -50,11 +55,49 @@
 
                     </a>
                 </div>
-
-
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
+                        <li class="dropdown dropdown-notifications">
+                            <a href="#notifications-panel" data-toggle="dropdown">
+                                <i data-count="{{$alert_quantities->count()}}" class="glyphicon glyphicon-bell notification-icon"></i>
+                            </a>
+
+                            <div class="dropdown-container">
+
+                                <div class="dropdown-toolbar">
+
+                                    <h3 class="dropdown-toolbar-title">Notifications ({{$alert_quantities->count()}})</h3>
+                                </div><!-- /dropdown-toolbar -->
+
+                                <ul class="dropdown-menu">
+                                    @foreach($alert_quantities as $item)
+                                        <li class="notification">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="media-object">
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <strong class="notification-title"><a href="#">{{$item->name}}</a> Quantity is <a href="#">{{$item->qty}}</a></strong>
+                                                    <p class="notification-desc">Place an order for this Item as soon as possible.</p>
+
+                                                    <div class="notification-meta">
+                                                        <small class="timestamp">Category: {{$item->category->name}}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+
+                                <div class="dropdown-footer text-center">
+                                    <a href="#">View All</a>
+                                </div><!-- /dropdown-footer -->
+
+                            </div><!-- /dropdown-container -->
+                        </li><!-- /dropdown -->
                         <li {{Request::is('/')? "class=active":''}}><a href="{{url('/')}}">Home</a></li>
                         @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
                             <li {{Request::is('sale/create')? "class=active":''}}><a href="{{url('/sale/create')}}">Add Sale</a></li>
@@ -63,7 +106,13 @@
                         <li {{Request::is('sale')? "class=active":''}}><a href="{{url('/sale/')}}">All Sales</a></li>
                         <li {{Request::is('purchase')? "class=active":''}}><a href="{{url('/purchase/')}}">All Purchases</a></li>
                         <li {{Request::is('people')? "class=active":''}}><a href="{{url('/people')}}">Lists</a></li>
-                        <li {{Request::is('item/summary')? "class=active":''}}><a href="{{url('/item/summary')}}">Inventory</a></li>
+                        <li class="{{Request::is('item/summary') || Request::is('item/searchMovement')? 'active ':''}}dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Item Reports <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li {{Request::is('item/summary')? "class=active":''}}><a href="{{url('/item/summary')}}">Inventory</a></li>
+                                <li {{Request::is('item/searchMovement')? "class=active":''}}><a href="{{url('/item/searchMovement')}}">Item Movements</a></li>
+                            </ul>
+                        </li>
                         @if(Auth::user()->role=='owner')
                             <li {{Request::is('/register')? "class=active":''}}><a href="{{url('/register')}}">Add User</a></li>
                             <li {{Request::is('/users/all')? "class=active":''}}><a href="{{url('/users/all')}}">All Users</a></li>

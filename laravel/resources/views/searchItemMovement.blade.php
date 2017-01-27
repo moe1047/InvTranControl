@@ -7,65 +7,11 @@
         <div class="row">
             <div class="col-md-12 ">
                 <div class="panel panel-default" ng-controller="saleList">
-                    <div class="panel-heading">Sale List</div>
+                    <div class="panel-heading">Search Item Movements</div>
                     <div class="panel-body" >
 
-                        <div id="sale" class="col-xs-12" ng-if="View == 'Sales'">
-                            @include('layouts.saleSearchForm')
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>SaleID</th><th>Date</th><th>Customer</th><th>Driver</th><th>Branch</th><th>Plate No</th><th>Status</th>
-                                    <th>Print</th>
-                                    @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
-                                        <th>Actions</th>
-                                    @endif
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($sales as $sale)
-                                    <tr>
-                                        <td>{{$sale->id}}</td>
-                                        <td>{{$sale->sale_date->toDateString()}}</td>
-                                        <td>{{$sale->customer->name}}</td>
-                                        <td>{{$sale->driver->name}}</td>
-                                        <td>{{$sale->orderedBy->name}}</td>
-                                        <td>{{$sale->plate_no}}</td>
-                                        <td><h4 style="margin-top: 3px;"><span class="{{$sale->status=='pending'?'label label-warning' :'label label-success'}}" >{{$sale->status}}</span></h4></td>
-                                        <td><a href="/sale/{{$sale->id}}/print" class="btn btn-default btn-sm" target="_blank">Print</a></td>
-                                        @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Action
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-
-                                                    @if($sale->status=='pending')
-                                                        <li><a href="{{url("/sale/$sale->id/complete")}}">Complete</a></li>
-                                                        <li><a href="{{url("/sale/$sale->id/cancelRemaining")}}">Cancel Remaining</a></li>
-                                                    @endif
-
-                                                    <li><a href="{{url("/sale/$sale->id/detail")}}"  target="_blank">Detail</a></li>
-                                                        <li><a href="{{url("/sale/$sale->id/edit")}}"  target="_blank">Edit</a></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li><a href="" ng-click="delSaleConfirmation({{$sale->id}})" onclick="return false">Delete</a></li>
-
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
-                            <div class="text-ceneter">
-                                {{ $sales->appends(Request::only('from'),Request::only('to'),Request::only('driver_id')
-                                ,Request::only('customer_id'),Request::only('branch_id'),Request::only('item_id'),Request::only('plate_no'),Request::only('status'))->links() }}
-
-                            </div>
+                        <div id="sale" class="col-xs-12">
+                            @include('layouts.itemMovementSearchForm')
                         </div>
 
                     </div>
@@ -75,8 +21,7 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{asset('js/sweetalert.min.js')}}"></script>
-    <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
+
     <script src="{{asset('js/ui-bootstrap-tpls-2.4.0.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/select2-bootstrap.css')}}">

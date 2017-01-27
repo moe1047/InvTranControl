@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("item/categories","ItemController@categories")->middleware(['sales']);
 
     Route::get("item/category/{id}/edit","ItemController@category_edit")->middleware(['sales']);
+    Route::get("item/searchMovement","ItemController@search_movement")->middleware(['sales']);
+    Route::get("item/movementReport","ItemController@movement_report")->middleware(['sales']);
     Route::post("item/category/{id}/update","ItemController@category_update")->name('category.update')->middleware(['sales']);
 
     Route::get("item/{id}/edit","ItemController@edit")->middleware(['sales']);

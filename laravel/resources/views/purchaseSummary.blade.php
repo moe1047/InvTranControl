@@ -13,6 +13,7 @@
                             <div style="margin-top:0px;margin-left:13%;float:left">
                                 <h1 class="text-center" >Sabawanaag General Trading</h1>
                                 <h5 class="text-center" style="text-decoration: underline;">Purchase Report</h5>
+                                <h5 class="text-center" style="text-decoration: underline;"><b>From:</b> {{$from}} - <b>To:</b> {{$to}}</h5>
                                 <p class="text-center"><b>Berbera:</b> 740794 <b>Hargeisa:</b> 524855 <b>Email:</b> tradingsaba@gmail.com</p>
                             </div>
                             <div style="margin-top:15px;margin-left:10px;float:right">
@@ -21,11 +22,6 @@
                         </div>
 
 
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5 class="text-center"><b>From:</b>{{$from}} - <b>To:</b>{{$to}}</h5>
                     </div>
                 </div>
                 <div class="panel panel-default">

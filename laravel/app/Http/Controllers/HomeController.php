@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\People;
+use App\Purchase;
 use App\Sale;
 use App\User;
 use Illuminate\Http\Request;
@@ -56,7 +58,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $sales=Sale::all()->count();
+        $purchases=Purchase::all()->count();
+        $pendingSales=Sale::where('status','pending')->count();
+        //$pendingSales=Sale::all()->count();
         $items=Item::all();
-        return view('home',compact('items'));
+        $alert_quantities=Item::whereRaw('items.qty <= items.alert_qty')->get();
+        $itemsCount=Item::all()->count();
+        $users=User::all()->count();
+        $branches=People::where('type','branch')->count();
+        $drivers=People::where('type','driver')->count();
+        $customers=People::where('type','customer')->count();
+        return view('home',compact('items','sales','pendingSales','purchases','itemsCount','purchases','branches','drivers','users','customers','alert_quantities'));
     }
 }
