@@ -27,7 +27,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @foreach($categories as $category)
-                            <table class="table table-bordered">
+                            <table class="table table-striped table-bordered ">
                                 <caption>{{$category->name}}</caption>
                                 <thead>
                                 <tr>

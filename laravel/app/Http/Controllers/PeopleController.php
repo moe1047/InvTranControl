@@ -19,15 +19,15 @@ class PeopleController extends Controller
     }
     public function customers()
     {
-        return People::where('type','customer')->get();
+        return People::where('type','customer')->orderBy('name')->get();
     }
     public function drivers()
     {
-        return People::where('type','driver')->get();
+        return People::where('type','driver')->orderBy('name')->get();
     }
     public function branches()
     {
-        return People::where('type','branch')->get();
+        return People::where('type','branch')->orderBy('name')->get();
     }//postCustomer
 
     public function postCustomer(Request $request)

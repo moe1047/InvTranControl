@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index');
 
     Route::get('/items', function () {
-        return \App\Item::select('name','id','qty','alert_qty')->get();
+        return \App\Item::select('name','id','qty','alert_qty')->orderBy('name')->get();
     });
     Route::get('/customers', function () {
         return \App\People::where('type','customer')->pluck('name','id');

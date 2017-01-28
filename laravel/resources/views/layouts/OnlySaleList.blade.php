@@ -26,7 +26,7 @@
                                 @foreach($sales as $sale)
                                     <tr>
                                         <td>{{$sale->id}}</td>
-                                        <td>{{$sale->sale_date->toDateString()}}</td>
+                                        <td>{{$sale->sale_date->format('d/m/Y')}}</td>
                                         <td>{{$sale->customer->name}}</td>
                                         <td>{{$sale->driver->name}}</td>
                                         <td>{{$sale->orderedBy->name}}</td>
@@ -35,6 +35,7 @@
                                         <td><a href="/sale/{{$sale->id}}/print" class="btn btn-default btn-sm" target="_blank">Print</a></td>
                                         @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
                                         <td>
+
                                             <div class="dropdown">
                                                 <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                     Action
@@ -42,20 +43,21 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
-                                                    @if($sale->status=='pending')
-                                                        <li><a href="{{url("/sale/$sale->id/complete")}}">Complete</a></li>
-                                                        <li><a href="{{url("/sale/$sale->id/cancelRemaining")}}">Cancel Remaining</a></li>
-                                                    @endif
+                                                        @if($sale->status=='pending')
+                                                            <li><a href="{{url("/sale/$sale->id/complete")}}">Complete</a></li>
+                                                            <li><a href="{{url("/sale/$sale->id/cancelRemaining")}}" onclick="return confirmCancelRemaining()">Cancel Remaining</a></li>
+                                                        @endif
 
-                                                    <li><a href="{{url("/sale/$sale->id/detail")}}"  target="_blank">Detail</a></li>
-                                                        <li><a href="{{url("/sale/$sale->id/edit")}}"  target="_blank">Edit</a></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li><a href="" ng-click="delSaleConfirmation({{$sale->id}})" onclick="return false">Delete</a></li>
+                                                        <li><a href="{{url("/sale/$sale->id/detail")}}"  target="_blank">Detail</a></li>
+                                                        @if(Auth::user()->role=='owner')
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="" ng-click="delSaleConfirmation({{$sale->id}})">Delete</a></li>
+                                                        @endif
 
                                                 </ul>
                                             </div>
                                         </td>
-                                        @endif
+                                            @endif
                                     </tr>
                                 @endforeach
 
@@ -84,6 +86,15 @@
     <script type="text/javascript" src="{{asset('js/select2.js')}}"></script>
 
     <script>
+
+        var confirmCancelRemaining=function(){
+            var confirmation=confirm("Are you sure you want to cancel the remaining?");
+            if (confirmation == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         myApp=angular.module('myApp',['angular-loading-bar','ui.bootstrap','ui.select2']).config(['$httpProvider', function($httpProvider) {
             $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         }]);

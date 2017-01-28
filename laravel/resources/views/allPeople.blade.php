@@ -18,7 +18,7 @@
                         </div>
 
                         <div id="drivers" class="col-xs-12" ng-if="View == 'Drivers'">
-                            <table class="table table-hover">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Name</th><th>No</th>
@@ -47,7 +47,7 @@
                             </table>
                         </div>
                         <div id="customers" class="col-xs-12" ng-if="View == 'Customers'">
-                            <table class="table table-hover">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Name</th><th>No</th>
@@ -77,7 +77,7 @@
                             </table>
                         </div>
                         <div id="branches" class="col-xs-12" ng-if="View == 'Branches'">
-                            <table class="table table-hover">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Name</th><th>No</th>
@@ -106,7 +106,7 @@
                             </table>
                         </div>
                         <div id="items" class="col-xs-12" ng-if="View == 'Items'">
-                            <table class="table table-hover">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Name</th><th>qty</th><th>Alert Quantity</th>
@@ -136,7 +136,7 @@
                             </table>
                         </div>
                         <div id="items" class="col-xs-12" ng-if="View == 'Category'">
-                            <table class="table table-hover">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Name</th>

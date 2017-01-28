@@ -20,9 +20,6 @@
                                 <img src="{{asset('css/logo.jpg')}}" class="img img-rounded" width="120" height="100">
                             </div>
                         </div>
-
-
-
                     </div>
                     </div>
                     <div class="panel panel-default">
@@ -54,7 +51,7 @@
                                     ?>
                                 <tr>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->id}}</td>
-                                    <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->created_at->toDateString()}}</td>
+                                    <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->created_at->format('d/m/Y')}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->customer->name}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->orderedBy->name}}</td>
                                     <td rowspan="{{$item_id==''?$sale->ItemsCount()+1:2}}">{{$sale->driver->name}}</td>

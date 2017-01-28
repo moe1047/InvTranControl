@@ -46,7 +46,7 @@
                                 ?>
                                 <tr>
                                     <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->id}}</td>
-                                    <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->purchased_date}}</td>
+                                    <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->purchased_date->format('d/m/Y')}}</td>
                                     <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->ship_name}}</td>
                                     <td rowspan="{{$item_id==''?$purchase->ItemsCount()+1:2}}">{{$purchase->origin_country}}</td>
                                 </tr>

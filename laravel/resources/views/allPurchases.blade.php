@@ -27,7 +27,7 @@
                                 @foreach($purchases as $purchase)
                                     <tr>
                                         <td>{{$purchase->id}}</td>
-                                        <td>{{$purchase->purchased_date}}</td>
+                                        <td>{{$purchase->purchased_date->format('d/m/Y')}}</td>
                                         <td>{{$purchase->ship_name}}</td>
                                         <td>{{$purchase->origin_country}}</td>
 

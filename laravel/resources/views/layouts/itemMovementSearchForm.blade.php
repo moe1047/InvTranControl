@@ -6,7 +6,7 @@
             <div class="form-group col-md-3 ">
                 <label class="control-label">From</label>
                 <input type="text" class="form-control date" ng-model="submittedData.from"
-                       uib-datepicker-popup="yyyy-MM-dd"
+                       uib-datepicker-popup="dd-MM-yyyy"
                        is-open="popup1.opened"
                        datepicker-options="dateOptions"
 
@@ -17,7 +17,7 @@
             <div class="form-group col-md-3 ">
                 <label class="control-label">To</label>
                 <input type="text" class="form-control date" ng-model="submittedData.to"
-                       uib-datepicker-popup="yyyy-MM-dd"
+                       uib-datepicker-popup="dd-MM-yyyy"
                        ng-model="dt"
                        is-open="popup2.opened"
                        datepicker-options="dateOptions"

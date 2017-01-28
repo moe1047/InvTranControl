@@ -47,7 +47,7 @@ class ItemController extends Controller
                 return $builder->where('item_id',$request->input('item_id'));
             })->orderBy('created_at','asc')->get();
         $item_name=Item::find($request->input('item_id'))->name;
-        return view('ItemMovementSummary',compact('from','to','itemMovements','item_name'));
+        return view('itemMovementSummary',compact('from','to','itemMovements','item_name'));
     }
     public function createCategory(Request $request)
     {
@@ -100,13 +100,13 @@ class ItemController extends Controller
     }
     public function all()
     {
-        return Item::all();
+        return Item::all()->orderBy('name', 'asc');
         //People::find($id)->delete();
     }
     public function summary()
     {
         $today=Carbon::today()->toDateString();
-        $categories=Category::all();
+        $categories=Category::orderBy('name')->get();
         return view('inventoryList',compact('categories','today'));
         //People::find($id)->delete();
     }
