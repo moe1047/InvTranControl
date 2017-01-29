@@ -24,7 +24,7 @@
     <favorites_list name="inventory" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5779123">
+    <splitter split-orientation="horizontal" split-proportion="0.83539486">
       <split-first>
         <leaf>
           <file leaf-file-name="Sale.php" pinned="false" current-in-tab="false">
@@ -47,11 +47,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="inventoryList.blade.php" pinned="false" current-in-tab="true">
+          <file leaf-file-name="inventoryList.blade.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/laravel/resources/views/inventoryList.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.06238532" vertical-offset="0" max-vertical-offset="1156">
-                  <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+                <state vertical-scroll-proportion="-13.730769" vertical-offset="0" max-vertical-offset="1156">
+                  <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
                   <folding>
                     <element signature="e#288#313#0#HTML" expanded="true" />
                     <element signature="e#359#378#0#HTML" expanded="true" />
@@ -71,6 +71,39 @@
                 <state vertical-scroll-proportion="-31.384615" vertical-offset="0" max-vertical-offset="1547">
                   <caret line="48" column="139" selection-start-line="48" selection-start-column="139" selection-end-line="48" selection-end-column="139" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="allPurchases.blade.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/laravel/resources/views/allPurchases.blade.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-11.115385" vertical-offset="221" max-vertical-offset="5219">
+                  <caret line="30" column="73" selection-start-line="30" selection-start-column="73" selection-end-line="30" selection-end-column="73" />
+                  <folding>
+                    <marker date="1485619343604" expanded="true" signature="2487:2677" placeholder="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ItemController.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/ItemController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.3761468" vertical-offset="254" max-vertical-offset="816">
+                  <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="124" selection-end-column="9" />
+                  <folding>
+                    <element signature="e#266#885#0#PHP" expanded="false" />
+                    <element signature="e#906#1039#0#PHP" expanded="false" />
+                    <element signature="e#1044#1909#0#PHP" expanded="false" />
+                    <element signature="e#1914#2316#0#PHP" expanded="false" />
+                    <element signature="e#2321#2393#0#PHP" expanded="false" />
+                    <element signature="e#2398#2540#0#PHP" expanded="false" />
+                    <element signature="e#2562#2817#0#PHP" expanded="false" />
+                    <element signature="e#2822#3009#0#PHP" expanded="false" />
+                    <element signature="e#3014#3339#0#PHP" expanded="false" />
+                    <element signature="e#3344#3468#0#PHP" expanded="false" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -137,7 +170,6 @@
         <option value="$PROJECT_DIR$/laravel/routes/web.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/PeopleController.php" />
         <option value="$PROJECT_DIR$/laravel/app/Category.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/ItemController.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/allPeople.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/layouts/saleSearchForm.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/layouts/purchaseSearchForm.blade.php" />
@@ -149,6 +181,7 @@
         <option value="$PROJECT_DIR$/laravel/resources/views/purchaseSummary.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/summary.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/inventoryList.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/ItemController.php" />
       </list>
     </option>
   </component>
@@ -246,11 +279,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -268,7 +297,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Http" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="inventory" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="inventory" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="laravel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Http" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -566,13 +625,13 @@
         <state vertical-scroll-proportion="-13.730769" vertical-offset="357" max-vertical-offset="1462">
           <caret line="42" column="95" selection-start-line="42" selection-start-column="95" selection-end-line="42" selection-end-column="95" />
           <folding>
-            <element signature="e#288#313#0#HTML" expanded="true" />
-            <element signature="e#359#378#0#HTML" expanded="true" />
-            <element signature="e#444#495#0#HTML" expanded="true" />
-            <element signature="e#684#733#0#HTML" expanded="true" />
-            <element signature="e#880#915#0#HTML" expanded="true" />
-            <element signature="e#992#1027#0#HTML" expanded="true" />
-            <element signature="e#1316#1368#0#HTML" expanded="true" />
+            <element signature="e#288#313#0#HTML" expanded="false" />
+            <element signature="e#359#378#0#HTML" expanded="false" />
+            <element signature="e#444#495#0#HTML" expanded="false" />
+            <element signature="e#684#733#0#HTML" expanded="false" />
+            <element signature="e#880#915#0#HTML" expanded="false" />
+            <element signature="e#992#1027#0#HTML" expanded="false" />
+            <element signature="e#1316#1368#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -630,7 +689,7 @@
         <state vertical-scroll-proportion="0.5302752" vertical-offset="0" max-vertical-offset="629">
           <caret line="17" column="98" selection-start-line="17" selection-start-column="98" selection-end-line="17" selection-end-column="98" />
           <folding>
-            <element signature="e#33#46#0#PHP" expanded="true" />
+            <element signature="e#33#46#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -696,23 +755,23 @@
         <state vertical-scroll-proportion="-17.692308" vertical-offset="662" max-vertical-offset="1564">
           <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
           <folding>
-            <element signature="e#303#328#0#HTML" expanded="true" />
+            <element signature="e#303#328#0#HTML" expanded="false" />
             <element signature="e#270#1575#0#HTML" expanded="false" />
-            <element signature="e#374#393#0#HTML" expanded="true" />
-            <element signature="e#459#510#0#HTML" expanded="true" />
-            <element signature="e#699#748#0#HTML" expanded="true" />
-            <element signature="e#895#930#0#HTML" expanded="true" />
-            <element signature="e#1009#1044#0#HTML" expanded="true" />
-            <element signature="e#1285#1337#0#HTML" expanded="true" />
+            <element signature="e#374#393#0#HTML" expanded="false" />
+            <element signature="e#459#510#0#HTML" expanded="false" />
+            <element signature="e#699#748#0#HTML" expanded="false" />
+            <element signature="e#895#930#0#HTML" expanded="false" />
+            <element signature="e#895#930#0#HTML" expanded="false" />
+            <element signature="e#1285#1337#0#HTML" expanded="false" />
             <element signature="e#1592#3621#0#HTML" expanded="false" />
-            <element signature="e#3807#3832#0#HTML" expanded="true" />
-            <element signature="e#3878#3897#0#HTML" expanded="true" />
-            <element signature="e#3963#4014#0#HTML" expanded="true" />
-            <element signature="e#4203#4252#0#HTML" expanded="true" />
-            <element signature="e#4399#4434#0#HTML" expanded="true" />
-            <element signature="e#4513#4548#0#HTML" expanded="true" />
-            <element signature="e#4789#4841#0#HTML" expanded="true" />
-            <element signature="e#5239#5257#0#HTML" expanded="true" />
+            <element signature="e#3807#3832#0#HTML" expanded="false" />
+            <element signature="e#3878#3897#0#HTML" expanded="false" />
+            <element signature="e#3963#4014#0#HTML" expanded="false" />
+            <element signature="e#4203#4252#0#HTML" expanded="false" />
+            <element signature="e#4399#4434#0#HTML" expanded="false" />
+            <element signature="e#4513#4548#0#HTML" expanded="false" />
+            <element signature="e#4789#4841#0#HTML" expanded="false" />
+            <element signature="e#5239#5257#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -757,26 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/ItemController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="561">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="e#243#862#0#PHP" expanded="false" />
-            <element signature="e#883#1016#0#PHP" expanded="false" />
-            <element signature="e#1021#1886#0#PHP" expanded="false" />
-            <element signature="e#1891#2293#0#PHP" expanded="false" />
-            <element signature="e#2298#2370#0#PHP" expanded="false" />
-            <element signature="e#2375#2517#0#PHP" expanded="false" />
-            <element signature="e#2539#2794#0#PHP" expanded="false" />
-            <element signature="e#2799#2986#0#PHP" expanded="false" />
-            <element signature="e#2991#3316#0#PHP" expanded="false" />
-            <element signature="e#3321#3445#0#PHP" expanded="false" />
-            <element signature="e#3701#4246#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/layouts/purchaseSearchForm.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3076923" vertical-offset="408" max-vertical-offset="1088">
@@ -800,16 +839,6 @@
         <state vertical-scroll-proportion="-16.884615" vertical-offset="122" max-vertical-offset="714">
           <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/allPurchases.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5" vertical-offset="272" max-vertical-offset="5219">
-          <caret line="29" column="84" selection-start-line="29" selection-start-column="84" selection-end-line="29" selection-end-column="84" />
-          <folding>
-            <marker date="1485619343604" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -889,8 +918,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/inventoryList.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06238532" vertical-offset="0" max-vertical-offset="1156">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        <state vertical-scroll-proportion="-13.730769" vertical-offset="0" max-vertical-offset="1156">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
           <folding>
             <element signature="e#288#313#0#HTML" expanded="true" />
             <element signature="e#359#378#0#HTML" expanded="true" />
@@ -899,6 +928,35 @@
             <element signature="e#880#915#0#HTML" expanded="true" />
             <element signature="e#992#1027#0#HTML" expanded="true" />
             <element signature="e#1267#1319#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/allPurchases.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.115385" vertical-offset="221" max-vertical-offset="5219">
+          <caret line="30" column="73" selection-start-line="30" selection-start-column="73" selection-end-line="30" selection-end-column="73" />
+          <folding>
+            <marker date="1485619343604" expanded="true" signature="2487:2677" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/ItemController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3761468" vertical-offset="254" max-vertical-offset="816">
+          <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="124" selection-end-column="9" />
+          <folding>
+            <element signature="e#266#885#0#PHP" expanded="false" />
+            <element signature="e#906#1039#0#PHP" expanded="false" />
+            <element signature="e#1044#1909#0#PHP" expanded="false" />
+            <element signature="e#1914#2316#0#PHP" expanded="false" />
+            <element signature="e#2321#2393#0#PHP" expanded="false" />
+            <element signature="e#2398#2540#0#PHP" expanded="false" />
+            <element signature="e#2562#2817#0#PHP" expanded="false" />
+            <element signature="e#2822#3009#0#PHP" expanded="false" />
+            <element signature="e#3014#3339#0#PHP" expanded="false" />
+            <element signature="e#3344#3468#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>

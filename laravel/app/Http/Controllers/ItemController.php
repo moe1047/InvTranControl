@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Item;
 use App\ItemMovement;
+use App\PurchaseItems;
 use App\SaleItems;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -114,12 +115,13 @@ class ItemController extends Controller
     {
         try{
             $item=Item::find($id);
-            if(!(SaleItems::where('item_id',$item->id)->count()>0)){
+            if(!(SaleItems::where('item_id',$item->id)->count()>0 || PurchaseItems::where('item_id',$item->id)->count()>0)){
                 Item::find($id)->delete();
                 return response("A Item has been deleted", 201);
             }else{
-                throw new \Exception('This Item is in sales Transaction');
+                throw new \Exception('This Item is in sales/Purchase Transaction');
             }
+
         }catch (\Exception $e){
             //return response()->json(['message' => $e->getMessage()], 500 );
             return response($e->getMessage(), 500);
