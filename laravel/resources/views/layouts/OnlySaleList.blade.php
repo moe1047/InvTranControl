@@ -50,6 +50,7 @@
 
                                                         <li><a href="{{url("/sale/$sale->id/detail")}}"  target="_blank">Detail</a></li>
                                                         @if(Auth::user()->role=='owner')
+                                                                <li><a href="{{url("/sale/$sale->id/edit")}}" >Edit</a></li>
                                                         <li role="separator" class="divider"></li>
                                                         <li><a href="" ng-click="delSaleConfirmation({{$sale->id}})">Delete</a></li>
                                                         @endif
