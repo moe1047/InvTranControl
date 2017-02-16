@@ -65,9 +65,9 @@ class SaleController extends Controller
      */
     public function create()
     {
-        $customers=\App\People::where('type','customer')->get(['name','id']);
+        $customers=\App\People::where('type','customer')->get(['name','id','branch_id']);
         $drivers=\App\People::where('type','driver')->get(['name','id']);
-        $branches=\App\People::where('type','branch')->get(['name','id']);
+        $branches=\App\People::where('type','branch')->orderBy('name')->get(['name','id']);
         $items=\App\Item::all();
         return view("sale",compact('sales','customers','drivers','branches','items'));
     }

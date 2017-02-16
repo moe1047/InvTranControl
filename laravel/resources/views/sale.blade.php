@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('css')
 
-    @endsection
+@endsection
 @section('content')
 
     <div class="container" ng-controller="sale" ng-cloak>
@@ -55,9 +55,9 @@
                 $http({
                     method : "post",
                     url : "/people/customers/create",
-                    data:{'name':$scope.customer_name,'no':$scope.customer_no}
+                    data:{'name':$scope.customer_name,'no':$scope.customer_no,'branch_id':$scope.customer_branch_id}
                 }).then(function Succes(response) {
-                    $scope.customer_name='';$scope.customer_no='';
+                    $scope.customer_name='';$scope.customer_no='';$scope.customer_branch_id='';
                     location.reload();
                     console.log(response.data);
                     //console.log($scope.submittedData);

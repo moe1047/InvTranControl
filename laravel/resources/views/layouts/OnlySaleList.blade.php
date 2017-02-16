@@ -54,7 +54,6 @@
                                                         <li role="separator" class="divider"></li>
                                                         <li><a href="" ng-click="delSaleConfirmation({{$sale->id}})">Delete</a></li>
                                                         @endif
-
                                                 </ul>
                                             </div>
                                         </td>

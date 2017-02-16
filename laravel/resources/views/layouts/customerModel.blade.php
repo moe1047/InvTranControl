@@ -16,6 +16,15 @@
                         <label for="recipient-name" class="control-label">Tell:</label>
                         <input type="text" class="form-control" id="recipient-name" ng-model="customer_no" >
                     </div>
+                    <div class="form-group">
+                        <!--<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>-->
+                        <select  class="form-control select" name="branch_id" id="" size="4" ng-model="customer_branch_id">
+
+                            @foreach($branches as $branch)
+                                <option value="{{$branch->id}}">{{$branch->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <input type="hidden" value="customer">
                 </div>
                 <div class="modal-footer">

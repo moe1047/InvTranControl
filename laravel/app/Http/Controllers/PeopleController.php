@@ -33,7 +33,7 @@ class PeopleController extends Controller
     public function postCustomer(Request $request)
     {
         try{
-            return People::create(['name'=>$request->input('name'),'no'=>$request->input('no'),'type'=>'customer']);
+            return People::create(['name'=>$request->input('name'),'no'=>$request->input('no'),'type'=>'customer','branch_id'=>$request->input('branch_id')]);
         }catch (\Exception $e){
             return response()->json(['message' => $e->getMessage()]);
 
