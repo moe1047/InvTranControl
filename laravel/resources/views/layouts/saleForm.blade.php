@@ -4,10 +4,10 @@
         <label for="name" class="col-md-4 control-label">Customer:</label>
 
         <div class="col-md-6">
-            <select ui-select2 class="form-control" name="customer_id" ng-change="check()"  ng-model="submittedData.customer_id" autofocus>
+            <select id="customer" ui-select2 class="form-control" name="customer_id" ng-change="get_customer_branch()"  ng-model="submittedData.customer_id" autofocus>
                 <option value="">Select customer</option>
                 @foreach($customers as $customer)
-                    <option value="{{$customer->id}}">{{$customer->name}}</option>
+                    <option value="{{$customer->id}}" data-branch="{{$customer->branch_id}}">{{$customer->name}}</option>
                 @endforeach
             </select>
                 <span class="help-block" ng-show="saleForm.customer_id.$invalid && !saleForm.customer_id.$pristine">
@@ -91,10 +91,9 @@
 
         <div class="col-md-6">
             <!--<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>-->
-            <select ui-select2 class="form-control select" name="ordered_by"   ng-model="submittedData.ordered_by" id="">
-                <option value="">Select Branch</option>
-                @foreach($branches as $branche)
-                    <option value="{{$branche->id}}">{{$branche->name}}</option>
+            <select size="3" class="form-control select" name="ordered_by" ng-model="submittedData.ordered_by">
+                @foreach($branches as $branch)
+                    <option value="{{$branch->id}}">{{$branch->name}}</option>
                 @endforeach
             </select>
 

@@ -35,6 +35,7 @@
     <script type="text/javascript" src="{{asset('js/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/select2.js')}}"></script>
     <script>
+        var branch='';
 
         myApp=angular.module('myApp',['angular-loading-bar','ui.select2']);
         myApp.config(function($interpolateProvider) {
@@ -42,7 +43,8 @@
             $interpolateProvider.endSymbol(']]');
         });
 
-        myApp.controller('sale',function($scope,$http,$timeout){
+        myApp.controller('sale',function($scope,$http,$timeout,$window){
+            $scope.branch='';
             $scope.branch_name='';$scope.branch_no='';
             $scope.customer_name='';$scope.customer_no='';
             $scope.driver_name='';$scope.driver_no='';
@@ -158,7 +160,7 @@
                 customer_id:'',
                 items:$scope.selectedItems,
                 driver_id:'',
-                ordered_by:'',
+                ordered_by:0,
                 plate_no:'',
                 note:''
             };
@@ -191,8 +193,17 @@
                 $scope.selectedItems[key].in_stock=0;
                 console.log($scope.selectedItems[key].on_board);
             }
+            $scope.get_customer_branch=function(){
+                var customer =document.getElementById('customer');
+                branch = customer.options[customer.selectedIndex].getAttribute('data-branch');
+                console.log(typeof($scope.submittedData.ordered_by=$window.branch.toString()));
+
+                //alert(branch);
+            }
+
 
         });
+
     </script>
 
     @endsection
