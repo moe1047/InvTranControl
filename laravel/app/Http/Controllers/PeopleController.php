@@ -19,7 +19,7 @@ class PeopleController extends Controller
     }
     public function customers()
     {
-        return People::where('type','customer')->orderBy('name')->get();
+        return People::where('type','customer')->with('branch')->get();
     }
     public function drivers()
     {
@@ -89,15 +89,24 @@ class PeopleController extends Controller
     public function edit($id)
     {
         $people=People::find($id);
-        return view('editPeople',compact('people'));
+        $branches=\App\People::where('type','branch')->orderBy('name')->get(['name','id']);
+        return view('editPeople',compact('people','branches'));
     }
     public function update(Request $request,$id)
     {
+        $branch_id=null;
+        $people=People::find($id);
+        if($people->type=='customer'){
+            global $branch_id;
+            $branch_id=$request->input('branch_id');
+        }
+
+
         $this->validate($request, [
             'name' => 'required',
 
         ]);
-        People::find($id)->update(['name'=>$request->input('name'),'no'=>$request->input('no')]);
+        $people->update(['name'=>$request->input('name'),'no'=>$request->input('no'),'branch_id'=>$branch_id]);
         return redirect('people');
     }
 

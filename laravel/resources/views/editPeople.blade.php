@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            {!!Form::label('Alert Qty', 'Tell:', ['class' => 'col-md-4 control-label'])!!}
+                            {!!Form::label('tell', 'Tell:', ['class' => 'col-md-4 control-label'])!!}
 
                             <div class="col-md-6">
                                 {!!Form::text('no',null, ['class'=>'form-control'])!!}
@@ -45,6 +45,21 @@
                                 @endif
                             </div>
                         </div>
+                        @if($people->type=='customer')
+                            <div class="form-group">
+                                <!--<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>-->
+                                {!!Form::label('tell', 'Branch:', ['class' => 'col-md-4 control-label'])!!}
+                                <div class="col-md-6">
+                                    <select  class="form-control select col-md-6" name="branch_id" id="" size="4" ng-model="customer_branch_id">
+                                        @foreach($branches as $branch)
+                                            <option value="{{$branch->id}}" {{$people->branch_id==$branch->id?'selected':''}}>{{$branch->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        @endif
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

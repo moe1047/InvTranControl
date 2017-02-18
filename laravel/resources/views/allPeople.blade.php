@@ -50,7 +50,7 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name</th><th>No</th>
+                                    <th>Name</th><th>No</th><th>branch</th>
                                     @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
                                         <th>Edit</th>
                                     @endif
@@ -63,15 +63,13 @@
                                 <tr ng-repeat="customer in customers">
                                     <td>[[customer.name]]</td>
                                     <td>[[customer.no]]</td>
+                                    <td>[[customer.branch.name]]</td>
                                     @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
                                         <td><a href="people/[[customer.id]]/edit" class="btn btn-primary btn-sm" >Edit</a></td>
                                     @endif
                                     @if(Auth::user()->role=='owner' or Auth::user()->role=='sales')
                                         <td><a href="" class="btn btn-danger btn-sm" ng-click="confirmation(customer.id)">Delete</a></td>
                                     @endif
-
-
-
                                 </tr>
                                 </tbody>
                             </table>
@@ -182,11 +180,11 @@
                 $scope.customers=result.data;
             });
             $http.get('/people/drivers').then(function(result){
-                console.log(result.data);
+                //console.log(result.data);
                 $scope.drivers=result.data;
             });
             $http.get('/people/branches').then(function(result){
-                console.log(result.data);
+                //console.log(result.data);
                 $scope.branches=result.data;
             });
             $http.get('/item/categories').then(function(result){
