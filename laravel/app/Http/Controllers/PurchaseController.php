@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Item;
 use App\ItemMovement;
+use App\ItemWarehouse;
 use App\Purchase;
 use App\PurchaseItems;
+use App\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Request;
@@ -80,7 +82,8 @@ class PurchaseController extends Controller
     {
         //for Item registration
         $categories=Category::all();
-        return view("purchase",compact('categories'));
+        $warehouses=Warehouse::all();
+        return view("purchase",compact('categories','warehouses'));
     }
 
     public function delete($id)
@@ -96,8 +99,11 @@ class PurchaseController extends Controller
                 //get previous qty
                 $previous_qty=Item::find($purchaseItem->item->id)->qty;
                 Item::where('id',$purchaseItem->item->id)->update(['qty'=>(int)$previous_qty-(int)$purchaseItem->qty]);
+                //add quantity back to item warehouse
+                $itemWarehouse=ItemWarehouse::find($purchaseItem->ItemWarehouse->id);
+                $itemWarehouse->update(['qty'=>(int)$itemWarehouse->qty-(int)$purchaseItem->qty]);
                 ItemMovement::create(['tran_type'=>'delete_purchase','qty'=>(int)$purchaseItem->qty,
-                    'in_stock'=>(int)$previous_qty-(int)$purchaseItem->qty,'item_id'=>$purchaseItem->item_id]);
+                    'in_stock'=>(int)$previous_qty-(int)$purchaseItem->qty,'item_id'=>$purchaseItem->item_id,'item_warehouse_id'=>$purchaseItem->ItemWarehouse->id]);
 
                 //delete from saleItem
                 $purchaseItem->delete();
@@ -132,19 +138,37 @@ class PurchaseController extends Controller
             //get items
             $purchaseItems= $request->input('items');
 
+                //get if warehouse is empty
+            foreach($purchaseItems as $purchaseItem){
+                if($purchaseItem['warehouse'] =="" ){
+                    throw new \Exception('Warehouse Shouldnt be empty');
+                    break;
+
+                }
+            }
+
 
             //submit sale
             $purchase=Purchase::create(['ship_name'=>$request->input('ship_name'),'origin_country'=>$request->input('origin_country'),
                 'purchased_date'=>Carbon::now()->toDateString()]);
             //submit sale items
             foreach($purchaseItems as $purchaseItem){
-                PurchaseItems::create(['purchase_id'=>$purchase->id,'qty'=>$purchaseItem['qty'],'item_id'=>$purchaseItem['id']]);
+                $item_warehouse=ItemWarehouse::where('item_id',$purchaseItem['id'])->where('warehouse_id',$purchaseItem['warehouse'])->first();
+
+                PurchaseItems::create(['purchase_id'=>$purchase->id,'qty'=>$purchaseItem['qty'],'item_id'=>$purchaseItem['id'],'item_warehouse_id'=>$item_warehouse->id]);
                 //update item qty
                 $qty=Item::find($purchaseItem['id'])->qty;
+
                 $updatedItem=Item::where('id', $purchaseItem['id'])
                     ->update(['qty' => ((int)$qty+(int)$purchaseItem['qty'])]);
-                ItemMovement::create(['tran_type'=>'add_purchase','qty'=>(int)$purchaseItem['qty'],'tran_type_id'=>$purchase->id,
-                    'in_stock'=>(int)$qty+(int)$purchaseItem['qty'],'item_id'=>$purchaseItem['id']]);
+
+                //update item warehouse
+                $item_warehouse_qty=$item_warehouse->qty;
+                $item_warehouse->update(['qty'=>((int)$item_warehouse_qty+(int)$purchaseItem['qty'])]);
+
+                ItemMovement::create(['tran_type'=>'add_purchase','qty'=>(int)$purchaseItem['qty'],
+                    'tran_type_id'=>$purchase->id, 'in_stock'=>(int)$qty+(int)$purchaseItem['qty'],
+                    'item_id'=>$purchaseItem['id'],'item_warehouse_id'=>$item_warehouse->id]);
             }
         });
 

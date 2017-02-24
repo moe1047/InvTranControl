@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemMovement;
+use App\ItemWarehouse;
 use App\People;
 use App\Sale;
 use App\SaleItems;
 use App\SaleItemTran;
+use App\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -69,7 +71,8 @@ class SaleController extends Controller
         $drivers=\App\People::where('type','driver')->get(['name','id']);
         $branches=\App\People::where('type','branch')->orderBy('name')->get(['name','id']);
         $items=\App\Item::all();
-        return view("sale",compact('sales','customers','drivers','branches','items'));
+        $warehouses=Warehouse::all();
+        return view("sale",compact('sales','customers','drivers','branches','items','warehouses'));
     }
     public function printt($id)
     {
@@ -94,9 +97,8 @@ class SaleController extends Controller
         ]);
         $saleID=0;
 
-        DB::transaction(function($request) use ($request,$saleID)
+        DB::transaction(function($request) use ($request,&$saleID)
         {
-            global $saleID;
             //get items
             $sale_status="completed";
             $saleItems= $request->input('items');
@@ -116,6 +118,14 @@ class SaleController extends Controller
 
                 }
             }
+            //get if warehouse is empty
+            foreach($saleItems as $saleItem){
+                if($saleItem['warehouse'] =="" ){
+                    throw new \Exception('Warehouse Shouldnt be empty');
+                    break;
+
+                }
+            }
 
             //submit sale
             $sale=Sale::create(['driver_id' => $request->input('driver_id'),'customer_id'=>$request->input('customer_id'),'ordered_by'=>$request->input('ordered_by'),'plate_no'=>$request->input('plate_no'),'note'=>$request->input('note'),
@@ -125,22 +135,31 @@ class SaleController extends Controller
 
             //submit sale items
             foreach($saleItems as $saleItem){
-                $LastSaleItem=SaleItems::create(['sale_id'=>$sale->id,'qty'=>$saleItem['qty'],'item_id'=>$saleItem['id'],'on_board'=>$saleItem['on_board'],'in_stock'=>$saleItem['in_stock']]);
+                $item_warehouse=ItemWarehouse::where('item_id',$saleItem['id'])->where('warehouse_id',$saleItem['warehouse'])->first();
+                $LastSaleItem=SaleItems::create(['sale_id'=>$sale->id,'qty'=>$saleItem['qty'],
+                    'item_id'=>$saleItem['id'],'on_board'=>$saleItem['on_board'],'in_stock'=>$saleItem['in_stock'],
+                    'item_warehouse_id'=>$item_warehouse->id]);
                 //update item qty
                 $qty=Item::find($saleItem['id'])->qty;
                 Item::where('id', $saleItem['id'])
                     ->update(['qty' => ((int)$qty-(int)$saleItem['qty'])]);
+
+                //update item warehouse
+                $item_warehouse_qty=$item_warehouse->qty;
+                $item_warehouse->update(['qty'=>((int)$item_warehouse_qty-(int)$saleItem['qty'])]);
+
+
                 //add record to sale items Transactions
-                SaleItemTran::create(['sale_item_id'=>$LastSaleItem->id,'on_board'=>$saleItem['on_board'],'in_stock'=>$saleItem['in_stock'],'driver_id'=>$request->input('driver_id'),'plate_no'=>$request->input('plate_no'),'note'=>$request->input('note')]);
+                SaleItemTran::create(['sale_item_id'=>$LastSaleItem->id,'on_board'=>$saleItem['on_board'],
+                    'in_stock'=>$saleItem['in_stock'],'driver_id'=>$request->input('driver_id'),
+                    'plate_no'=>$request->input('plate_no'),'note'=>$request->input('note')]);
                 ItemMovement::create(['tran_type'=>'add_sale','qty'=>(int)$saleItem['qty'],'tran_type_id'=>$sale->id,
-                    'in_stock'=>(int)$qty-(int)$saleItem['qty'],'item_id'=>$saleItem['id']]);
-
+                    'in_stock'=>(int)$qty-(int)$saleItem['qty'],'item_id'=>$saleItem['id'],'item_warehouse_id'=>$item_warehouse->id]);
             }
-
 
         },5);//how to many times to re execute if a deadlock accures
 
-        $saleID=Sale::orderBy('id', 'desc')->first()->id;
+        //$saleID=Sale::orderBy('id', 'desc')->first()->id;
         return response($saleID);
 
 
@@ -172,8 +191,13 @@ class SaleController extends Controller
                   //get previous qty
                 $previous_qty=Item::find($saleItem->item->id)->qty;
                 Item::where('id',$saleItem->item->id)->update(['qty'=>(int)$previous_qty+(int)$saleItem->qty]);
+                //add quantity back to item warehouse
+                $itemWarehouse=ItemWarehouse::find($saleItem->ItemWarehouse->id);
+                $itemWarehouse->update(['qty'=>(int)$itemWarehouse->qty+(int)$saleItem->qty]);
+
                 ItemMovement::create(['tran_type'=>'delete_sale','qty'=>(int)$saleItem->qty,
-                    'in_stock'=>(int)$previous_qty+(int)$saleItem->qty,'item_id'=>$saleItem->item_id]);
+                    'in_stock'=>(int)$previous_qty+(int)$saleItem->qty,'item_id'=>$saleItem->item_id,
+                    'item_warehouse_id'=>$itemWarehouse->id]);
 
                 //delete from saleItem
                 $saleItem->delete();
@@ -182,7 +206,7 @@ class SaleController extends Controller
             $sale->delete();
 
         });
-        return redirect('sale');
+        //return redirect('sale');
         //delete from sale
         //delete from saleItem
         //delete from saleItemTransaction

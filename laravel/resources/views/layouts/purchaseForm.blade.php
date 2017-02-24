@@ -60,7 +60,7 @@
         <caption>Purchase List</caption>
         <thead>
         <tr>
-            <th>Item Name</th> <th>Qty</th><th>In Stock</th> <th></th>
+            <th>Item Name</th> <th>Qty</th><th>In Stock</th> <th>Warehouse</th><th></th>
         </tr>
 
         </thead>
@@ -71,6 +71,13 @@
                 <input type="text" class="form-control" ng-model="selectedItems[key].qty">
             </td>
             <td >[[value.stock]]</td>
+            <td>
+                <select class="form-control" ng-model="selectedItems[key].warehouse">
+                    @foreach($warehouses as $warehouse)
+                        <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                    @endforeach
+                </select>
+            </td>
             <td><button class="btn btn-danger" ng-click="removeItem(key)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>
         </tbody>

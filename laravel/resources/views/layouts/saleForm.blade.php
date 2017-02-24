@@ -40,16 +40,16 @@
         </div>
 
     </div>
-
     <table class="table table-bordered col-md-6">
         <caption>Sale List</caption>
         <thead>
         <tr>
-            <th>Item Name</th> <th>Qty</th><th>Shipped</th><th>Remaining</th><th>In Stock</th> <th></th>
+            <th>Item Name</th> <th>Qty</th><th>Shipped</th><th>Remaining</th><th>In Stock</th> <th>Warehouse</th><th></th>
         </tr>
 
         </thead>
         <tbody >
+
         <tr ng-repeat="(key,value) in selectedItems track by $index">
             <td >[[value.name]]</td>
             <td>
@@ -62,6 +62,13 @@
                 <input type="text" class="form-control" ng-model="selectedItems[key].in_stock" ng-change="update_on_board(key)">
             </td>
             <td>[[value.stock | number ]]</td>
+            <td>
+                <select class="form-control" ng-model="selectedItems[key].warehouse">
+                    @foreach($warehouses as $warehouse)
+                        <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                    @endforeach
+                </select>
+            </td>
             <td><button class="btn btn-danger" ng-click="removeItem(key)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>
         </tbody>
@@ -97,10 +104,9 @@
                 @endforeach
             </select>
 
-
-                <span class="help-block" ng-show="saleForm.ordered_by.$invalid && !saleForm.ordered_by.$pristine">
-                                        <strong>Order by is required</strong>
-                                    </span>
+            <span class="help-block" ng-show="saleForm.ordered_by.$invalid && !saleForm.ordered_by.$pristine">
+                <strong>Order by is required</strong>
+            </span>
 
         </div>
         <div class="col-md-1"><button class="btn btn-default" data-toggle="modal" data-target="#bmodal">New</button></div>

@@ -6,7 +6,7 @@
 
     <div class="container" ng-controller="sale" ng-cloak>
         <div class="row">
-            <div class="col-md-10 col-md-offset-2">
+            <div class="col-md-12 ">
                 <div class="panel panel-default">
                     <div class="panel-heading">Add Sale</div>
                     <div class="panel-body" >
@@ -131,7 +131,8 @@
                                 qty:0,
                                 stock:$scope.items[i].qty,
                                 on_board:0,
-                                in_stock:0
+                                in_stock:0,
+                                warehouse:0
                             };
                             $scope.selectedItems.push(obj);
                             break;
@@ -163,6 +164,7 @@
                 ordered_by:0,
                 plate_no:'',
                 note:''
+
             };
 
             //Submit sale

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    protected  $fillable=['purchased_date','ship_name','origin_country'];
+    protected  $fillable=['purchased_date','ship_name','origin_country','item_warehouse_id'];
 
 
     public function purchaseItems()

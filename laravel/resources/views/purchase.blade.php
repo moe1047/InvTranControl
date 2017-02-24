@@ -5,7 +5,7 @@
 @section('content')
     <div class="container" ng-controller="purchase" ng-cloak>
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">Add purchase</div>
                     <div class="panel-body"  >
@@ -66,7 +66,8 @@
                                 id: $scope.selectedItem,
                                 name:$scope.items[i].name,
                                 qty:0,
-                                stock:$scope.items[i].qty
+                                stock:$scope.items[i].qty,
+                                warehouse:0
                             };
                             $scope.selectedItems.push(obj);
                             break;

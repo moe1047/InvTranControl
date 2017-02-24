@@ -242,8 +242,10 @@
                                         console.log(result.data);
                                         $scope.sales=result.data;
                                     });
+                                    console.log(response.data);
                                     swal("Deleted!", "Sale has been deleted.", "success");
                                 }, function Error(response) {
+                                    console.log(response.data);
                                     swal("Error", "Something went wrong", "error");
                                 });
                             } else {
